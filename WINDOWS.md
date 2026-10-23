@@ -248,6 +248,8 @@ powershell -ExecutionPolicy Bypass -File .\deploy-mypublicwifi\Uninstall-MyPubli
 ## Safety boundary
 
 The application permanently reports internet forwarding as disabled and rejects
-attempts to enable it through the admin API. It does not inspect page contents,
-record browsing URLs, create firewall rules by itself, change adapter settings or
-run privileged MyPublicWiFi commands.
+attempts to enable it through the admin API. It does not inspect page contents or
+record browsing URLs itself; it can display the browsing log that MyPublicWiFi
+records, which must be disclosed to guests in the portal privacy notice. It does
+not create firewall rules by itself, change adapter settings or run privileged
+MyPublicWiFi commands.

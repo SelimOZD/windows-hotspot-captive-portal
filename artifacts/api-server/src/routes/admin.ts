@@ -72,9 +72,10 @@ function hotspotStatus(settings: ReturnType<typeof getOrCreateSettings>) {
         detail: "Internet forwarding is permanently disabled by this application.",
       },
       {
-        label: "URL and browsing tracking",
+        label: "Browsing log",
         state: "ready",
-        detail: "This application does not collect browsing history or page URLs.",
+        detail:
+          "Read from MyPublicWiFi and shown to the operator; disclosed in the portal privacy notice.",
       },
     ],
   });

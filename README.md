@@ -9,6 +9,8 @@ The Wi-Fi radio, DHCP and the captive redirect are provided by
 [MyPublicWiFi](https://mypublicwifi.com/publicwifi/en/index.html) (free). This
 project provides the portal page, the operator console and the data store.
 
+![Operator console: hotspot readiness, pending requests and local-only boundaries](docs/operator-console.png)
+
 ## What you get
 
 - **Guest portal** — a consent notice and a short form, served from the host.
@@ -70,6 +72,19 @@ operating system embeds foreign paths and will not start.
 Run **`5-Make-Zip.cmd`** to produce `Windows-Wi-Fi-Captive-Portal.zip` next to this
 folder. It excludes `node_modules`, `.git` and local runtime data, so the result
 is small and contains nothing personal.
+
+## Screenshots
+
+**Connected devices** — everyone who joined, with MAC, IPs, session history, data
+usage and whatever the guest submitted. Hidden devices are dimmed and can be
+restored.
+
+![Connected devices](docs/connected-devices.png)
+
+**Guest portal** — the consent notice and access form a guest sees on their phone,
+in the same theme.
+
+<img src="docs/guest-portal.png" width="320" alt="Guest portal on a phone">
 
 ## Limitations and notes
 

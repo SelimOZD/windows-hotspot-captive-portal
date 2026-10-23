@@ -882,7 +882,7 @@ function DevicesPage() {
         <StatCard label="Total guest time" value={formatDuration(totalMinutes)} detail="Sum of all sessions" icon={Clock3} tone="slate" />
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_380px]">
+      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
         <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_8px_24px_hsl(211_30%_20%/.05)]">
           {selectMode && (
             <div className="flex flex-wrap items-center gap-2 border-b border-slate-100 bg-slate-50 px-4 py-3 text-sm">
@@ -937,7 +937,7 @@ function DevicesPage() {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[780px] text-left text-sm">
+              <table className="w-full min-w-[680px] text-left text-sm">
                 <thead className="bg-slate-50 text-[11px] uppercase tracking-[.08em] text-slate-400">
                   <tr>
                     {selectMode && (
