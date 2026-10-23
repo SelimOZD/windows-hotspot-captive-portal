@@ -39,7 +39,7 @@ project provides the portal page, the operator console and the data store.
 | Guest portal | `http://192.168.5.1:8080/` |
 | Operator console | `http://127.0.0.1:8081/admin` |
 
-Step-by-step detail and troubleshooting live in **`WINDOWS.md`**.
+Step-by-step detail and troubleshooting live in **[WINDOWS.md](WINDOWS.md)**.
 
 ## Project layout
 
@@ -85,10 +85,10 @@ Worth being explicit about the boundaries of this project:
 - **A firewall rule is required** for the portal port, otherwise guests load the
   redirect page and then cannot reach the portal.
 - **One client band at a time.** A 2.4 GHz-only phone needs the hotspot pinned to
-  2.4 GHz; see `WINDOWS.md`.
+  2.4 GHz; see [WINDOWS.md](WINDOWS.md) → *Wi-Fi band (2.4 GHz vs 5 GHz)*.
 - **No internet by default.** It is built for an isolated network, but MyPublicWiFi
   can share the laptop's connection if you enable it there — the portal and data
-  capture are unaffected. See `WINDOWS.md` → *Internet access (optional)*.
+  capture are unaffected. See [WINDOWS.md](WINDOWS.md) → *Internet access (optional)*.
 - **The browsing log is privacy-sensitive.** It is recorded by MyPublicWiFi and
   must be disclosed to guests in the portal privacy notice.
 
@@ -98,6 +98,15 @@ The portal records what a guest submits (name, contact, consent) plus
 device/connection metadata, and can surface MyPublicWiFi's per-device browsing
 log. Before using this with real people, publish an accurate privacy notice in
 **Portal settings** and make sure guests can have their data erased.
+
+## Credit
+
+Built by **Selim Özdemir** ([@SelimOZD](https://github.com/SelimOZD)).
+
+If you use, deploy, or build on this project, please keep the copyright notice from
+[LICENSE](LICENSE) and credit the author with a link back to this repository. Under
+the MIT licence, preserving that notice is required; a visible credit beyond it is
+requested, but not legally required.
 
 ## Third-party software
 

@@ -2,6 +2,7 @@
   "name": "local-wifi-portal",
   "version": "1.0.0",
   "license": "MIT",
+  "author": "Selim Özdemir",
   "scripts": {
     "build": "pnpm run typecheck && pnpm -r --if-present run build",
     "build:windows": "pnpm --filter @workspace/local-wifi-portal build && pnpm --filter @workspace/api-server build",
