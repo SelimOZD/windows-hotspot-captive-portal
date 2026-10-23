@@ -25,9 +25,9 @@ project provides the portal page, the operator console and the data store.
 - Windows 10 or 11
 - **Node.js 22 or newer** (uses the built-in `node:sqlite`)
 - **MyPublicWiFi** — https://mypublicwifi.com/publicwifi/en/index.html (free)
-- A Wi-Fi adapter that MyPublicWiFi supports. The hotspot broadcasts on whichever
+- **A Wi-Fi adapter that MyPublicWiFi supports.** (The hotspot broadcasts on whichever
   band the laptop's own connection uses, and a **2.4 GHz-only device cannot see a
-  5 GHz hotspot**. If any guest device is 2.4 GHz-only, pin the hotspot to 2.4 GHz
+  5 GHz hotspot**. If any guest device is 2.4 GHz-only, pin the hotspot to 2.4 GHz)
   — see [WINDOWS.md](WINDOWS.md) → *Wi-Fi band (2.4 GHz vs 5 GHz)*.
 
 ## Quick start
