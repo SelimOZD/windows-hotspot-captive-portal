@@ -13,7 +13,7 @@ if ($env:INTERNET_FORWARDING -eq "true") {
 }
 
 Write-Host ""
-Write-Host "Windows Captive Portal" -ForegroundColor Cyan
+Write-Host "Windows Hotspot Captive Portal" -ForegroundColor Cyan
 Write-Host "  Guest portal : http://$($env:HOTSPOT_HOST):$($env:GUEST_PORT)/"
 Write-Host "  Admin console: http://127.0.0.1:$($env:ADMIN_PORT)/admin"
 Write-Host ""

@@ -28,7 +28,7 @@ const adminPort = readPort("ADMIN_PORT", 8081);
 const captiveRedirectPort = readOptionalPort("CAPTIVE_REDIRECT_PORT");
 
 if (process.env.INTERNET_FORWARDING === "true") {
-  throw new Error("INTERNET_FORWARDING must remain false for Windows Captive Portal.");
+  throw new Error("INTERNET_FORWARDING must remain false for Windows Hotspot Captive Portal.");
 }
 
 const guestServer = createApp("guest").listen(guestPort, hotspotHost);

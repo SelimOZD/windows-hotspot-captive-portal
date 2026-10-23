@@ -11,7 +11,7 @@ if (-not $OutputPath) {
 }
 
 Write-Host ""
-Write-Host "Packaging Windows Captive Portal" -ForegroundColor Cyan
+Write-Host "Packaging Windows Hotspot Captive Portal" -ForegroundColor Cyan
 Write-Host "  source: $root"
 Write-Host "  output: $OutputPath"
 Write-Host ""
