@@ -1,0 +1,21 @@
+{
+  "name": "local-wifi-portal",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "pnpm run typecheck && pnpm -r --if-present run build",
+    "build:windows": "pnpm --filter @workspace/local-wifi-portal build && pnpm --filter @workspace/api-server build",
+    "start:windows": "pnpm --filter @workspace/api-server start",
+    "typecheck:libs": "tsc --build",
+    "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --if-present run typecheck"
+  },
+  "private": true,
+  "devDependencies": {
+    "prettier": "^3.9.6",
+    "typescript": "~5.9.3"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "packageManager": "pnpm@10.26.1"
+}
