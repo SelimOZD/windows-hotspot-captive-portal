@@ -1,4 +1,4 @@
-# Local Wi-Fi Portal — Windows 10
+# Windows Captive Portal — Windows 10
 
 This project runs the guest portal and operator console locally on a Windows 10
 laptop. MyPublicWiFi provides the Wi-Fi hotspot, DHCP, DNS and the captive-portal

@@ -158,7 +158,7 @@ function AdminNav() {
       <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 bg-[#f3f6f8]/90 px-4 backdrop-blur md:hidden">
         <Link href="/admin" className="focus-ring flex items-center gap-2" data-testid="link-admin-mobile-logo">
           <Mark />
-          <span className="text-sm font-extrabold tracking-tight text-slate-800">Local Wi-Fi Portal</span>
+          <span className="text-sm font-extrabold tracking-tight text-slate-800">Windows Captive Portal</span>
         </Link>
         <button data-testid="button-open-mobile-nav" onClick={() => setOpen((value) => !value)} className="focus-ring rounded-lg p-2 text-slate-700 hover:bg-slate-200" aria-label="Open navigation"><Menu size={21} /></button>
       </header>
@@ -167,7 +167,7 @@ function AdminNav() {
         <div className="mb-10 flex items-center gap-3 px-3">
           <Mark />
           <div>
-            <div className="text-sm font-extrabold tracking-tight text-white">Local Wi-Fi</div>
+            <div className="text-sm font-extrabold tracking-tight text-white">Captive Portal</div>
             <div className="mono-label mt-0.5 text-slate-400">Operator console</div>
           </div>
         </div>

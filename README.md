@@ -1,4 +1,4 @@
-# Local Wi-Fi Portal
+# Windows Captive Portal
 
 A self-hosted guest Wi-Fi portal for Windows 10/11. Guests join a local hotspot,
 are shown a captive-portal page, and their details are stored on the host laptop
