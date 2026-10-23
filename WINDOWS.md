@@ -57,7 +57,8 @@ After it builds you do not need pnpm again; just run the server.
    Windows Firewall. See `deploy-mypublicwifi/README.md`.
 
    In MyPublicWiFi, make sure local network access is allowed so guests can
-   reach the portal, and leave internet sharing OFF.
+   reach the portal, and leave internet sharing OFF — see *Internet access
+   (optional)* below if you would rather guests had internet.
 
 ## Start (every time)
 
@@ -99,27 +100,107 @@ Override with `SQLITE_PATH`. No database server or internet connection is needed
 
 ## Wi-Fi band (2.4 GHz vs 5 GHz)
 
-A single Wi-Fi card can only broadcast **one** band at a time, and Windows mirrors
-the band of whichever network the laptop is connected to. If the laptop is on a
-5 GHz network, the hotspot is 5 GHz and 2.4 GHz-only phones cannot see the SSID
-at all.
+This is the most common reason a guest device "can't see the network", so it is
+worth understanding properly.
 
-To be visible to both old phones and laptops, broadcast on **2.4 GHz**
-(everything supports it):
+**The constraint.** One Wi-Fi card broadcasts **one band at a time**. 2.4 GHz and
+5 GHz are separate radios; the card cannot run both, and neither can Windows'
+hosted-AP API.
 
-1. Check MyPublicWiFi's settings for a band option and choose 2.4 GHz.
-2. Otherwise force the adapter (elevated PowerShell), then restart the hotspot:
+**The catch.** Windows (and therefore MyPublicWiFi) mirrors the band of the
+network the laptop is currently connected to. Join a 5 GHz network and the hotspot
+comes up on 5 GHz. With no Wi-Fi connection at all, the hotspot usually falls back
+to 2.4 GHz.
 
-   ```powershell
-   powershell -ExecutionPolicy Bypass -File .\deploy-mypublicwifi\Set-WifiBand.ps1 -Band 2.4
-   ```
+**Why it breaks for guests.** 2.4 GHz-only devices — older phones, most IoT gear,
+cheap tablets — cannot see a 5 GHz SSID *at all*. It is not weak signal: to those
+devices the network does not exist.
 
-   If the SSID still does not appear on the phone, try `-Strong`, or set the
-   laptop's own Wi-Fi to a 2.4 GHz network before starting the hotspot.
-   Undo any time with `-Band Any`.
+**The trade-off.**
 
-Forcing 2.4 GHz also affects the laptop's normal Wi-Fi (slower). Restore with
-`-Band Any` when you are done.
+| Band | Visible to | Speed | Range / walls | Interference |
+| --- | --- | --- | --- | --- |
+| 2.4 GHz | everything | slower (narrow channels) | better | more crowded — neighbours, Bluetooth, microwaves |
+| 5 GHz | dual-band devices only | much faster | shorter | less crowded |
+
+If **any** guest device might be 2.4 GHz-only, broadcast **2.4 GHz**: it is the
+lowest common denominator and everything supports it.
+
+### Check which band you are on
+
+```powershell
+netsh wlan show interfaces
+```
+
+Look at `Channel` on the `Wi-Fi` interface: **1–14** is 2.4 GHz, **36 and above**
+is 5 GHz. The hotspot mirrors that connection, so this is normally the band your
+hotspot is using. You can also just try to connect a 2.4 GHz-only phone — if the
+SSID is missing from its list, the hotspot is on 5 GHz.
+
+### Enable 2.4 GHz (in order of least disruption)
+
+1. **MyPublicWiFi itself** — look for a band / "Prefer Mobile Hotspot" option in
+   its settings and choose 2.4 GHz. If it exists, use it; nothing else changes.
+2. **`3-Set-Wifi-2.4GHz.cmd`** — run it (it asks for admin). It sets the adapter's
+   *Preferred Band* to 2.4 GHz **and** pins *802.11a/b/g Wireless Mode* to
+   "2.4 GHz b/g" only, then restarts the adapter. Restart the hotspot afterwards.
+3. **Device Manager** — Network adapters → your Wi-Fi adapter → Properties →
+   **Advanced** → *Preferred Band* = "2. Prefer 2.4GHz band". If that alone is not
+   enough, also set *802.11a/b/g Wireless Mode* to a 2.4 GHz-only entry.
+
+Equivalent command form (what the script runs):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\deploy-mypublicwifi\Set-WifiBand.ps1 -Band 2.4 -Strong
+```
+
+`-Band 5` does the opposite (prefer 5 GHz) if you want the speed and do not care
+about older devices.
+
+### Disable it / return to normal
+
+```powershell
+# elevated
+4-Restore-Wifi-Band.cmd
+```
+
+or, equivalently:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\deploy-mypublicwifi\Set-WifiBand.ps1 -Band Any
+```
+
+That sets *Preferred Band* back to "No Preference" and *Wireless Mode* back to
+"Dual Band a/b/g", then restarts the adapter.
+
+**Remember it is global.** While 2.4 GHz is forced, the laptop's own Wi-Fi is
+restricted to 2.4 GHz too, so its normal internet is slower and more prone to
+interference. Restore it when you have finished hosting.
+
+## Internet access (optional)
+
+This project is set up for an **isolated** network with no internet, because that
+is what makes the captive portal reliable and the data collection honest. But that
+is a **choice, not a limitation** — internet is possible if you toggle it in
+MyPublicWiFi.
+
+- In MyPublicWiFi, enable internet sharing and pick the connection to share
+  (Ethernet, Wi-Fi, 4G/USB). Guests then get internet through the laptop.
+- The portal, the operator console and every piece of data capture behave exactly
+  the same with or without internet. Nothing in this project needs to change.
+
+Two things to know before you enable it:
+
+- **This app never forwards traffic.** It does not proxy, NAT or inspect anything.
+  `INTERNET_FORWARDING` is permanently false and the admin API rejects attempts to
+  turn it on — sharing is entirely MyPublicWiFi's job.
+- **The portal and internet access pull against each other.** The portal appears
+  because MyPublicWiFi gates unauthenticated guests. This project replaces
+  MyPublicWiFi's login page with one that forwards to our portal, so guests never
+  complete MyPublicWiFi's own login step. If you enable internet sharing, decide
+  which behaviour you want: **gated** (keep User Authentication on, and accept that
+  guests stay in our portal) or **open** (turn the portal/auth off and simply share
+  the connection).
 
 ## Test checklist
 
@@ -132,7 +213,7 @@ Forcing 2.4 GHz also affects the laptop's normal Wi-Fi (slower). Restore with
 7. Approve, deny and erase a test request.
 8. Restart the portal and confirm data persists.
 9. Confirm the phone cannot reach `:8081/admin`.
-10. Confirm there is no internet access and no browsing URLs are logged by us.
+10. Confirm there is no internet access while internet sharing is off.
 
 ## Troubleshooting: the portal page does not open
 

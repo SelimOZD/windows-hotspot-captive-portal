@@ -86,8 +86,9 @@ Worth being explicit about the boundaries of this project:
   redirect page and then cannot reach the portal.
 - **One client band at a time.** A 2.4 GHz-only phone needs the hotspot pinned to
   2.4 GHz; see `WINDOWS.md`.
-- **Not a router.** There is no internet sharing by design; this is a data
-  collection portal for an isolated network.
+- **No internet by default.** It is built for an isolated network, but MyPublicWiFi
+  can share the laptop's connection if you enable it there — the portal and data
+  capture are unaffected. See `WINDOWS.md` → *Internet access (optional)*.
 - **The browsing log is privacy-sensitive.** It is recorded by MyPublicWiFi and
   must be disclosed to guests in the portal privacy notice.
 
